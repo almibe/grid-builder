@@ -25,4 +25,19 @@ class MinkTest {
             throw Exception("node isn't instance of GridPane")
         }
     }
+
+    test fun addTwoTextNodeTest() {
+        val hello = Text("Hello")
+        val minkfx = Text("minkfx")
+        val node = mink { +hello +minkfx }
+
+        if (node is GridPane) {
+            val children = node.getChildren()
+            assertEquals(2, children.size())
+            assertEquals(hello, children[0])
+            assertEquals(minkfx, children[1])
+        } else {
+            throw Exception("node isn't instance of GridPane")
+        }
+    }
 }
