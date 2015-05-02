@@ -13,4 +13,8 @@ fun mink(init: MinkFx.() -> Unit): Node {
 
 class MinkFx() {
     val node = GridPane()
+
+    fun Node.plus() {
+        node.add(this, 1, 1)
+    }
 }
