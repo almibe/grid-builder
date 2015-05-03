@@ -41,15 +41,33 @@ class MinkTest {
         assertEquals(1, node.getChildren().size())
     }
 
-//    test fun nodeSpanTest() {
-//        val hello = Text("Hello")
-//        val world = Text("World")
-//        val minkfx = Text("from minkfx")
-//
-//        val node = mink { +hello +span(world, 3) +minkfx }
-//
-//        val children = node.getChildren()
-//        assertEquals(3, children.size())
-//        assertEquals(3, GridPane.getColumnSpan(world))
-//    }
+    test fun positionSpanTest() {
+        val hello = Text("Hello")
+        val world = Text("World")
+        val minkfx = Text("from minkfx")
+
+        val node = mink { +hello +Span(world, 3) +minkfx }
+
+        assertEquals(3, node.getChildren().size())
+        assertEquals(3, GridPane.getColumnSpan(world))
+        assertEquals(0, GridPane.getColumnSpan(hello))
+        assertEquals(1, GridPane.getColumnSpan(world))
+        assertEquals(4, GridPane.getColumnSpan(minkfx))
+    }
+
+    test fun breakTest() {
+
+    }
+
+    test fun blankTest() {
+
+    }
+
+    test fun spanRowTest() {
+
+    }
+
+    test fun spanColumnTest() {
+
+    }
 }
