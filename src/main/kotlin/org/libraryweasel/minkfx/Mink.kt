@@ -88,10 +88,9 @@ class MinkFx() {
 
 fun parametersToCoordinates(x: Int, y: Int, length: Int, height: Int) : List<Coordinate> {
     var xCnt = x
-    var yCnt = y
     val result = ArrayList<Coordinate>();
     while (xCnt < x + length) {
-        yCnt = y
+        var yCnt = y
         while (yCnt < y + height) {
             result.add(Coordinate(xCnt, yCnt))
             yCnt++
