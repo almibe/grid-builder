@@ -14,8 +14,7 @@ fun mink(init: MinkFx.() -> Unit) : GridPane {
 }
 
 private trait MinkContainer
-data class Single(val node: Node) : MinkContainer
-data class Span(val node: Node, val columns: Int, val rows: Int = 1) : MinkContainer
+data class Span(val node: Node, val columns: Int = 1, val rows: Int = 1) : MinkContainer
 data class Break() : MinkContainer
 data class Blank(val columns: Int = 1, val rows: Int = 1) : MinkContainer
 data class Coordinate(val x: Int, val y: Int)
@@ -26,15 +25,15 @@ class MinkFx() {
     private var currentX = 0
     private var currentY = 0
 
-    fun Node.plus() : Single {
-        val single = Single(this)
-        handleSingle(single)
+    fun Node.plus() : Span {
+        val single = Span(this)
+        handleSpan(single)
         return single
     }
 
     fun MinkContainer.plus(node: Node) : MinkContainer {
-        val single = Single(node)
-        handleSingle(single)
+        val single = Span(node)
+        handleSpan(single)
         return single
     }
 
@@ -54,15 +53,6 @@ class MinkFx() {
             is Break -> handleBreak(minkContainer)
             is Blank -> handleBlank(minkContainer)
         }
-    }
-
-    fun handleSingle(single: Single) {
-        while (coords.contains(Coordinate(currentX, currentY))) {
-            currentX++
-        }
-        pane.add(single.node, currentX, currentY)
-        coords.add(Coordinate(currentX, currentY))
-        currentX++
     }
 
     fun handleSpan(span: Span) {
