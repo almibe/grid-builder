@@ -38,19 +38,20 @@ class MinkFx() {
     }
 
     fun MinkContainer.plus() : MinkContainer {
-        when (this) {
-            is Span -> handleSpan(this)
-            is Break -> handleBreak(this)
-        }
+        handleContainer(this)
         return this
     }
 
     fun MinkContainer.plus(minkContainer: MinkContainer) : MinkContainer {
+        handleContainer(minkContainer)
+        return minkContainer
+    }
+
+    fun handleContainer(minkContainer: MinkContainer) {
         when (minkContainer) {
             is Span -> handleSpan(minkContainer)
             is Break -> handleBreak(minkContainer)
         }
-        return minkContainer
     }
 
     fun handleSingle(single: Single) {
