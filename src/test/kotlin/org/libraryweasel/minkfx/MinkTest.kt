@@ -67,7 +67,10 @@ class MinkTest {
         val world = Text("World")
         val minkfx = Text("from minkfx")
 
-        val node = mink { +hello +Break() +Span(world, 3) +minkfx }
+        val node = mink {
+            +hello +Break()
+            +Span(world, 3) +minkfx
+        }
 
         assertEquals(3, node.getChildren().size())
 
