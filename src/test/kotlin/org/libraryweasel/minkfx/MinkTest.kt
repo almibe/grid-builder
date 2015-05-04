@@ -41,33 +41,40 @@ class MinkTest {
         assertEquals(1, node.getChildren().size())
     }
 
-    test fun positionSpanTest() {
-        val hello = Text("Hello")
-        val world = Text("World")
-        val minkfx = Text("from minkfx")
+    test fun parametersToCoordinatesTest() {
+        val result = parametersToCoordinates(3,4,5,7)
 
-        val node = mink { +hello +Span(world, 3) +minkfx }
-
-        assertEquals(3, node.getChildren().size())
-        assertEquals(3, GridPane.getColumnSpan(world))
-        assertEquals(0, GridPane.getColumnSpan(hello))
-        assertEquals(1, GridPane.getColumnSpan(world))
-        assertEquals(4, GridPane.getColumnSpan(minkfx))
+        assertEquals(35, result.size())
+        assert(result.containsAll(listOf(Coordinate(3,4))));
     }
 
-    test fun breakTest() {
-
-    }
-
-    test fun blankTest() {
-
-    }
-
-    test fun spanRowTest() {
-
-    }
-
-    test fun spanColumnTest() {
-
-    }
+//    test fun positionSpanTest() {
+//        val hello = Text("Hello")
+//        val world = Text("World")
+//        val minkfx = Text("from minkfx")
+//
+//        val node = mink { +hello +Span(world, 3) +minkfx }
+//
+//        assertEquals(3, node.getChildren().size())
+//        assertEquals(3, GridPane.getColumnSpan(world))
+//        assertEquals(0, GridPane.getColumnIndex(hello))
+//        assertEquals(1, GridPane.getColumnIndex(world))
+//        assertEquals(4, GridPane.getColumnIndex(minkfx))
+//    }
+//
+//    test fun breakTest() {
+//
+//    }
+//
+//    test fun blankTest() {
+//
+//    }
+//
+//    test fun spanRowTest() {
+//
+//    }
+//
+//    test fun spanColumnTest() {
+//
+//    }
 }
