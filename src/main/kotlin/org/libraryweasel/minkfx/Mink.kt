@@ -38,15 +38,17 @@ class MinkFx() {
     }
 
     fun MinkContainer.plus() : MinkContainer {
-        if (this is Span) {
-            handleSpan(this)
+        when (this) {
+            is Span -> handleSpan(this)
+            is Break -> handleBreak(this)
         }
         return this
     }
 
     fun MinkContainer.plus(minkContainer: MinkContainer) : MinkContainer {
-        if (minkContainer is Span) {
-            handleSpan(minkContainer)
+        when (minkContainer) {
+            is Span -> handleSpan(minkContainer)
+            is Break -> handleBreak(minkContainer)
         }
         return minkContainer
     }
@@ -64,6 +66,11 @@ class MinkFx() {
         pane.add(span.node, currentX, currentY, span.columns, span.rows)
         coords.addAll(parametersToCoordinates(currentX, currentY, span.columns, span.rows))
         currentX++
+    }
+
+    fun handleBreak(b: Break) {
+        currentX = 0
+        currentY++
     }
 }
 
