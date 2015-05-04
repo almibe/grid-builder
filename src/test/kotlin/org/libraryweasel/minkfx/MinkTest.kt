@@ -48,19 +48,19 @@ class MinkTest {
         assert(result.containsAll(listOf(Coordinate(3,4))));
     }
 
-//    test fun positionSpanTest() {
-//        val hello = Text("Hello")
-//        val world = Text("World")
-//        val minkfx = Text("from minkfx")
-//
-//        val node = mink { +hello +Span(world, 3) +minkfx }
-//
-//        assertEquals(3, node.getChildren().size())
-//        assertEquals(3, GridPane.getColumnSpan(world))
-//        assertEquals(0, GridPane.getColumnIndex(hello))
-//        assertEquals(1, GridPane.getColumnIndex(world))
-//        assertEquals(4, GridPane.getColumnIndex(minkfx))
-//    }
+    test fun positionSpanTest() {
+        val hello = Text("Hello")
+        val world = Text("World")
+        val minkfx = Text("from minkfx")
+
+        val node = mink { +hello +Span(world, 3) +minkfx }
+
+        assertEquals(3, node.getChildren().size())
+        assertEquals(3, GridPane.getColumnSpan(world))
+        assertEquals(0, GridPane.getColumnIndex(hello))
+        assertEquals(1, GridPane.getColumnIndex(world))
+        assertEquals(4, GridPane.getColumnIndex(minkfx))
+    }
 //
 //    test fun breakTest() {
 //

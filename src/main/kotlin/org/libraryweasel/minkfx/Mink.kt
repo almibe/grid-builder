@@ -26,33 +26,44 @@ class MinkFx() {
     private var currentY = 0
 
     fun Node.plus() : Single {
-        pane.add(this, currentX, currentY)
-        coords.add(Coordinate(currentX, currentY))
-        currentX++
-        currentY++
-        return Single(this)
+        val single = Single(this)
+        handleSingle(single)
+        return single
+    }
+
+    fun MinkContainer.plus(node: Node) : MinkContainer {
+        val single = Single(node)
+        handleSingle(single)
+        return single
     }
 
     fun MinkContainer.plus() : MinkContainer {
         if (this is Span) {
-            pane.add(this.node, 3, 3, 3, 3)
+            handleSpan(this)
         }
         return this
     }
 
-    fun MinkContainer.plus(node: Node) : MinkContainer {
-        pane.add(node, 1, 1)
-        return Single(node)
-    }
-
     fun MinkContainer.plus(minkContainer: MinkContainer) : MinkContainer {
         if (minkContainer is Span) {
-            pane.add(minkContainer.node, currentX, currentY, minkContainer.columns, minkContainer.rows)
-            coords.add(Coordinate(currentX, currentY))
-            currentX++
-            currentY++
+            handleSpan(minkContainer)
         }
         return minkContainer
+    }
+
+    fun handleSingle(single: Single) {
+        while (coords.contains(Coordinate(currentX, currentY))) {
+            currentX++
+        }
+        pane.add(single.node, currentX, currentY)
+        coords.add(Coordinate(currentX, currentY))
+        currentX++
+    }
+
+    fun handleSpan(span: Span) {
+        pane.add(span.node, currentX, currentY, span.columns, span.rows)
+        coords.addAll(parametersToCoordinates(currentX, currentY, span.columns, span.rows))
+        currentX++
     }
 }
 
