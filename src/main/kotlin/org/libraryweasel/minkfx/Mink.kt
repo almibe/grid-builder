@@ -3,6 +3,7 @@ package org.libraryweasel.minkfx
 import javafx.scene.Node
 import javafx.scene.layout.GridPane
 import java.util.ArrayList
+import java.util.Collections
 import java.util.HashMap
 import java.util.HashSet
 
@@ -65,7 +66,7 @@ class MinkFx() {
     }
 
     fun handleSpan(span: Span) {
-        while (coords.contains(Coordinate(currentX, currentY))) {
+        while (!Collections.disjoint(coords, parametersToCoordinates(currentX, currentY, span.columns, span.rows))) {
             currentX++
         }
         pane.add(span.node, currentX, currentY, span.columns, span.rows)
@@ -79,7 +80,7 @@ class MinkFx() {
     }
 
     fun handleBlank(blank: Blank) {
-        while (coords.contains(Coordinate(currentX, currentY))) {
+        while (!Collections.disjoint(coords, parametersToCoordinates(currentX, currentX, blank.columns, blank.rows))) {
             currentX++
         }
         coords.addAll(parametersToCoordinates(currentX, currentX, blank.columns, blank.rows))
