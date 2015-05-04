@@ -16,7 +16,7 @@ private trait MinkContainer
 data class Single(val node: Node) : MinkContainer
 data class Span(val node: Node, val columns: Int, val rows: Int = 1) : MinkContainer
 data class Break() : MinkContainer
-data class Blank(val columns: Int, val rows: Int = 1) : MinkContainer
+data class Blank(val columns: Int = 1, val rows: Int = 1) : MinkContainer
 data class Coordinate(val x: Int, val y: Int)
 
 class MinkFx() {
@@ -51,6 +51,7 @@ class MinkFx() {
         when (minkContainer) {
             is Span -> handleSpan(minkContainer)
             is Break -> handleBreak(minkContainer)
+            is Blank -> handleBlank(minkContainer)
         }
     }
 
@@ -64,6 +65,9 @@ class MinkFx() {
     }
 
     fun handleSpan(span: Span) {
+        while (coords.contains(Coordinate(currentX, currentY))) {
+            currentX++
+        }
         pane.add(span.node, currentX, currentY, span.columns, span.rows)
         coords.addAll(parametersToCoordinates(currentX, currentY, span.columns, span.rows))
         currentX++
@@ -72,6 +76,13 @@ class MinkFx() {
     fun handleBreak(b: Break) {
         currentX = 0
         currentY++
+    }
+
+    fun handleBlank(blank: Blank) {
+        while (coords.contains(Coordinate(currentX, currentY))) {
+            currentX++
+        }
+        coords.addAll(parametersToCoordinates(currentX, currentX, blank.columns, blank.rows))
     }
 }
 
