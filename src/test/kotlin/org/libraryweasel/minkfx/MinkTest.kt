@@ -110,6 +110,24 @@ class MinkTest {
         assertEquals(0, GridPane.getColumnIndex(ex))
         assertEquals(2, GridPane.getRowIndex(ex))
     }
+
+    test fun overlapTest() {
+        val hello = Text("Hello")
+        val world = Text("World")
+
+        val node = mink {
+            +Blank() +Span(hello, 2, 2) +Break()
+            +Span(world, 2, 2)
+        }
+
+        assertEquals(2, node.getChildren().size())
+
+        assertEquals(1, GridPane.getColumnIndex(hello))
+        assertEquals(0, GridPane.getRowIndex(hello))
+
+        assertEquals(3, GridPane.getColumnIndex(world))
+        assertEquals(1, GridPane.getRowIndex(world))
+    }
 //
 //    test fun spanRowTest() {
 //
