@@ -1,4 +1,4 @@
-package org.libraryweasel.minkfx
+package org.libraryweasel.gridbuilder
 
 import javafx.scene.Node
 import javafx.scene.layout.GridPane
@@ -7,19 +7,19 @@ import java.util.Collections
 import java.util.HashMap
 import java.util.HashSet
 
-fun mink(init: MinkFx.() -> Unit) : GridPane {
-    val minkFx = MinkFx()
-    minkFx.init()
-    return minkFx.pane
+fun gridBuilder(init: GridBuilder.() -> Unit) : GridPane {
+    val gridBuilder = GridBuilder()
+    gridBuilder.init()
+    return gridBuilder.pane
 }
 
-private trait MinkContainer
-data class Span(val node: Node, val columns: Int = 1, val rows: Int = 1) : MinkContainer
-data class Break() : MinkContainer
-data class Blank(val columns: Int = 1, val rows: Int = 1) : MinkContainer
+private interface GridContainer
+data class Span(val node: Node, val columns: Int = 1, val rows: Int = 1) : GridContainer
+data class Break() : GridContainer
+data class Blank(val columns: Int = 1, val rows: Int = 1) : GridContainer
 data class Coordinate(val x: Int, val y: Int)
 
-class MinkFx() {
+class GridBuilder() {
     val pane = GridPane()
     private val coords = HashSet<Coordinate>()
     private var currentX = 0
@@ -31,27 +31,27 @@ class MinkFx() {
         return single
     }
 
-    fun MinkContainer.plus(node: Node) : MinkContainer {
+    fun GridContainer.plus(node: Node) : GridContainer {
         val single = Span(node)
         handleSpan(single)
         return single
     }
 
-    fun MinkContainer.plus() : MinkContainer {
+    fun GridContainer.plus() : GridContainer {
         handleContainer(this)
         return this
     }
 
-    fun MinkContainer.plus(minkContainer: MinkContainer) : MinkContainer {
-        handleContainer(minkContainer)
-        return minkContainer
+    fun GridContainer.plus(gridContainer: GridContainer) : GridContainer {
+        handleContainer(gridContainer)
+        return gridContainer
     }
 
-    fun handleContainer(minkContainer: MinkContainer) {
-        when (minkContainer) {
-            is Span -> handleSpan(minkContainer)
-            is Break -> handleBreak(minkContainer)
-            is Blank -> handleBlank(minkContainer)
+    fun handleContainer(gridContainer: GridContainer) {
+        when (gridContainer) {
+            is Span -> handleSpan(gridContainer)
+            is Break -> handleBreak(gridContainer)
+            is Blank -> handleBlank(gridContainer)
         }
     }
 

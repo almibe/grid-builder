@@ -1,4 +1,4 @@
-package org.libraryweasel.minkfx
+package org.libraryweasel.gridbuilder
 
 import javafx.scene.Node
 import javafx.scene.layout.GridPane
@@ -7,15 +7,15 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import org.junit.Test as test
 
-class MinkTest {
+class GridBuilderTest {
     test fun emptyTest() {
-        val node: Node = mink {}
+        val node: Node = gridBuilder {}
         assertNotNull(node)
     }
 
     test fun addSingleTextNodeTest() {
-        val hello = Text("Hello minkfx")
-        val node = mink { +hello }
+        val hello = Text("Hello gridBuilder")
+        val node = gridBuilder { +hello }
 
         val children = node.getChildren()
         assertEquals(1, children.size())
@@ -24,18 +24,18 @@ class MinkTest {
 
     test fun addTwoTextNodeTest() {
         val hello = Text("Hello")
-        val minkfx = Text("minkfx")
-        val node = mink { +hello +minkfx }
+        val gridBuilder = Text("gridBuilder")
+        val node = gridBuilder { +hello +gridBuilder }
 
         val children = node.getChildren()
         assertEquals(2, children.size())
         assertEquals(hello, children[0])
-        assertEquals(minkfx, children[1])
+        assertEquals(gridBuilder, children[1])
     }
 
     test fun singleSpanTest() {
         val hello = Text("Hello")
-        val node = mink { +Span(hello, 3) }
+        val node = gridBuilder { +Span(hello, 3) }
 
         assertEquals(3, GridPane.getColumnSpan(hello))
         assertEquals(1, node.getChildren().size())
@@ -51,25 +51,25 @@ class MinkTest {
     test fun positionSpanTest() {
         val hello = Text("Hello")
         val world = Text("World")
-        val minkfx = Text("from minkfx")
+        val gridBuilder = Text("from gridBuilder")
 
-        val node = mink { +hello +Span(world, 3) +minkfx }
+        val node = gridBuilder { +hello +Span(world, 3) +gridBuilder }
 
         assertEquals(3, node.getChildren().size())
         assertEquals(3, GridPane.getColumnSpan(world))
         assertEquals(0, GridPane.getColumnIndex(hello))
         assertEquals(1, GridPane.getColumnIndex(world))
-        assertEquals(4, GridPane.getColumnIndex(minkfx))
+        assertEquals(4, GridPane.getColumnIndex(gridBuilder))
     }
 
     test fun breakTest() {
         val hello = Text("Hello")
         val world = Text("World")
-        val minkfx = Text("from minkfx")
+        val gridBuilder = Text("from gridBuilder")
 
-        val node = mink {
+        val node = gridBuilder {
             +hello +Break()
-            +Span(world, 3) +minkfx
+            +Span(world, 3) +gridBuilder
         }
 
         assertEquals(3, node.getChildren().size())
@@ -80,19 +80,19 @@ class MinkTest {
         assertEquals(0, GridPane.getColumnIndex(world))
         assertEquals(1, GridPane.getRowIndex(world))
 
-        assertEquals(3, GridPane.getColumnIndex(minkfx))
-        assertEquals(1, GridPane.getRowIndex(minkfx))
+        assertEquals(3, GridPane.getColumnIndex(gridBuilder))
+        assertEquals(1, GridPane.getRowIndex(gridBuilder))
     }
 
     test fun blankTest() {
         val hello = Text("Hello")
         val world = Text("World")
-        val minkfx = Text("from minkfx")
+        val gridBuilder = Text("from gridBuilder")
         val ex = Text("!!!")
 
-        val node = mink {
+        val node = gridBuilder {
             +Blank(2,2) +hello +Break()
-            +Span(world, 3) +Blank() +minkfx +Break()
+            +Span(world, 3) +Blank() +gridBuilder +Break()
             +ex
         }
 
@@ -104,8 +104,8 @@ class MinkTest {
         assertEquals(2, GridPane.getColumnIndex(world))
         assertEquals(1, GridPane.getRowIndex(world))
 
-        assertEquals(5, GridPane.getColumnIndex(minkfx))
-        assertEquals(1, GridPane.getRowIndex(minkfx))
+        assertEquals(5, GridPane.getColumnIndex(gridBuilder))
+        assertEquals(1, GridPane.getRowIndex(gridBuilder))
 
         assertEquals(0, GridPane.getColumnIndex(ex))
         assertEquals(2, GridPane.getRowIndex(ex))
@@ -115,7 +115,7 @@ class MinkTest {
         val hello = Text("Hello")
         val world = Text("World")
 
-        val node = mink {
+        val node = gridBuilder {
             +Blank() +Span(hello, 2, 2) +Break()
             +Span(world, 2, 2)
         }
