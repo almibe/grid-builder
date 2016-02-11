@@ -2,10 +2,7 @@ package org.libraryweasel.gridbuilder
 
 import javafx.scene.Node
 import javafx.scene.layout.GridPane
-import java.util.ArrayList
-import java.util.Collections
-import java.util.HashMap
-import java.util.HashSet
+import java.util.*
 
 fun gridBuilder(init: GridBuilder.() -> Unit) : GridPane {
     val gridBuilder = GridBuilder()
@@ -13,9 +10,9 @@ fun gridBuilder(init: GridBuilder.() -> Unit) : GridPane {
     return gridBuilder.pane
 }
 
-private interface GridContainer
+interface GridContainer
 data class Span(val node: Node, val columns: Int = 1, val rows: Int = 1) : GridContainer
-data class Break() : GridContainer
+class Break() : GridContainer
 data class Blank(val columns: Int = 1, val rows: Int = 1) : GridContainer
 data class Coordinate(val x: Int, val y: Int)
 
